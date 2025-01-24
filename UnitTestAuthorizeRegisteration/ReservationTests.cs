@@ -1,14 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Runtime.InteropServices;
+﻿//using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using TestNinja.Fundamentals;
 
 namespace UnitTestAuthorizeRegisteration
 {
-    [TestClass]
+    [TestFixture]
     public class ReservationTests
     {
-        [TestMethod]
+        [Test]
         public void CanBeCancelledBy_UserIsAdmin_ReturnsTrue()
         {
             // Arrange
@@ -18,10 +17,10 @@ namespace UnitTestAuthorizeRegisteration
             var result = reservation.CanBeCancelledBy(new User { IsAdmin = true });
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result, Is.True);
         }
 
-        [TestMethod]
+        [Test]
         public void CanBeCancelledBy_UserIsOwner_ReturnsTrue()
         {
             // Arrange
@@ -34,10 +33,10 @@ namespace UnitTestAuthorizeRegisteration
             var result = reservation.CanBeCancelledBy(reservation.MadeBy);
 
             // Assert
-            Assert.IsTrue(result);
+            Assert.That(result == true);
         }
 
-        [TestMethod]
+        [Test]
         public void CanBeCancelledBy_AnotherUser_ReturnsFalse()
         {
             // Arrange
@@ -46,15 +45,15 @@ namespace UnitTestAuthorizeRegisteration
 
             var reservation = new Reservation();
             reservation.MadeBy = User;
-            
+
             // Act
             var result = reservation.CanBeCancelledBy(new User()
             {
                 IsAdmin = false
             });
-            
+
             // Assert
-            Assert.IsFalse(result);
+            Assert.That(result == false);
         }
     }
 }
